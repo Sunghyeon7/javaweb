@@ -5,6 +5,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>test5_4.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
 </head>
@@ -22,7 +23,7 @@
     <a href="${ctp}/mapping/Test5_5.mi" class="btn btn-danger">test5_5호출</a>
   </p>
   <hr/>
-  	메세지 : ${msg}
+    메세지 : ${msg}
   <hr/>
 </div>
 <p><br/></p>

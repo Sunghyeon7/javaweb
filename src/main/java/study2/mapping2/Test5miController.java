@@ -14,7 +14,6 @@ import study2.mapping.Test5Service;
 @SuppressWarnings("serial")
 @WebServlet("*.mi")
 public class Test5miController extends HttpServlet {
-
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Test5miInterface command = null;
@@ -22,7 +21,6 @@ public class Test5miController extends HttpServlet {
 		
 		String uri = request.getRequestURI();
 		String com = uri.substring(uri.lastIndexOf("/"), uri.lastIndexOf("."));
-		
 		
 		
 		if(com.equals("/Test5")) {
@@ -33,6 +31,7 @@ public class Test5miController extends HttpServlet {
 		}
 		else if(com.equals("/Test5_3")) {
 			command = new Test5DanCommand();
+			command.execute(request, response);
 			viewPage += "/test5_3.jsp";
 		}
 		else if(com.equals("/Test5_4")) {

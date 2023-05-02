@@ -5,6 +5,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>test5.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
 </head>
@@ -22,34 +23,34 @@
     <a href="${ctp}/mapping/Test5_5.do" class="btn btn-danger">test5_5호출</a>
   </p>
   <hr/>
-</div>
   <div>
-  	<form name="myform" method="post" action="${ctp}/Test5)5.do">
-  		<div>
-  			첫번째 수 : <input type="number" name="su1" value="0" class="form-control" />
-  		</div>
- 
-  		<div>연산자 :
-  			 <select name="op" class="form-control" >
-  			 <option selected>+</option>
-  			 <option>-</option>
-  			 <option>*</option>
-  			 <option>/</option>
-  			 <option>%</option>
-  			</select>
-  		</div>
- 
-  		<div>
-  			두번째 수 : <input type="number" name="su2" value="0" class="form-control" />
-  		</div>
- 		
- 		<div>
- 			<input type="submit" value="계산" class="btn btn-success form-control mt-3" />
- 		</div>
-  	</form>
+    <form name="myform" method="post" action="${ctp}/Test5_5.do">
+      <div>
+        첫번째수 : <input type="number" name="su1" value="0" class="form-control"/>
+      </div>
+      <div>연산자 : 
+        <select name="op" class="form-control">
+        	<option selected>+</option>
+        	<option>-</option>
+        	<option>*</option>
+        	<option>/</option>
+        	<option>%</option>
+        </select>
+      </div>
+      <div>
+        두번째수 : <input type="number" name="su2" value="0" class="form-control"/>
+      </div>
+      <div>
+        <input type="submit" value="계산" class="btn btn-success form-control mt-3"/>
+      </div>
+    </form>
   </div>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
 </body>
 </html>
+
+
+
+

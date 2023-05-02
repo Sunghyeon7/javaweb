@@ -10,11 +10,9 @@ public class Test5MsgCommand implements Test5miInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String msg = "이곳은 Test5MsgCommand에서 보내는 메세지 입니다.";
+		String msg = "이곳은 Test5MsgCommand에서 보냅니다.";
 		
 		request.setAttribute("msg", msg);
-		
-
 	}
 
 }

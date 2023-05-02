@@ -9,8 +9,9 @@ public class Test5Service {
 		else if(op.equals("-")) res = su1 - su2;
 		else if(op.equals("*")) res = su1 * su2;
 		else if(op.equals("/")) res = su1 / su2;
-
+		else res = su1 % su2;
 		
 		return res;
 	}
+	
 }

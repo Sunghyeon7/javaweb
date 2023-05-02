@@ -46,7 +46,7 @@ public class Test5Controller extends HttpServlet {
 			request.setAttribute("su2", su2);
 			request.setAttribute("op", op);
 			request.setAttribute("res", res);
-			
+
 			viewPage += "/test5_5.jsp";
 		}
 		

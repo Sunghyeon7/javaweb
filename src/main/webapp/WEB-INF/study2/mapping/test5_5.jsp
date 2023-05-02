@@ -5,6 +5,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>test5_5.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
 </head>
@@ -21,11 +22,12 @@
     <a href="${ctp}/mapping/Test5_3.do" class="btn btn-secondary">test5_3호출</a>
     <a href="${ctp}/mapping/Test5_4.do" class="btn btn-danger">test5_4호출</a>
   </p>
-  <hr/>	
+  <hr/>
   <div>
-  	<h4> 연산 결과</h4>
-  	<div> ${su1} ${op} ${su2} = ${res}</div>
+    <h4>연산결과</h4>
+    <div>${su1} ${op} ${su2} = ${res}</div>
   </div>
+</div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
 </body>
