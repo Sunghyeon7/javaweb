@@ -30,14 +30,14 @@ public class GuestListCommand implements GuestInterface {
 		
 		// 6. 현재 화면에 표시할 시작번호를 구한다.
 		int curScrStartNo = totRecCnt - startIndexNo;
-
-		// 블록 페이징 처리. 블록의 시작번호를 0부터 처리했다.
-
-		// 1. 블록의 크기를 결정한다. (현 작업에선 3으로 결정후 처리)
+		
+		
+		// 블록페이징처리.... 블록의 시작번호를 0부터 처리했다.
+		// 1. 블록의 크기를 결정한다.(여기선 3으로 결정후 처리)
 		int blockSize = 3;
 		
-		// 2. 현재페이지가 속한 블록 번호를 구한다.(예 : 1,2 페이지는 0블록 4~6페이지는 1블록)
-		int curBlock = (pag - 1 ) / blockSize;
+		// 2. 현재페이지가 속한 블록 번호를 구한다.(예:1페이지는 0블록, 2페이지도 0블록, 4~6페이지는 1블록)
+		int curBlock = (pag - 1) / blockSize;
 		
 		// 3. 마지막 블록을 구한다.
 		int lastBlock = (totPage - 1) / blockSize;
@@ -48,8 +48,8 @@ public class GuestListCommand implements GuestInterface {
 		request.setAttribute("vos", vos);
 		request.setAttribute("pag", pag);
 		request.setAttribute("totPage", totPage);
-		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("curScrStartNo", curScrStartNo);
+		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);

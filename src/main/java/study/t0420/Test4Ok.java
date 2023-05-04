@@ -33,7 +33,7 @@ public class Test4Ok extends HttpServlet {
 	  System.out.println("나이 : " + age);
 	  System.out.println("성별 : " + gender);
 	  System.out.println("취미 : " + strHobby);
-	  System.out.println("접속자 IP : " + hostIp);
+	  System.out.println("접속자IP : " + hostIp);
 	  
 	  request.setAttribute("name", name);
 	  request.setAttribute("age", age);

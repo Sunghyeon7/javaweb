@@ -7,11 +7,6 @@ public class Test1VO {
 	private String job;
 	private String address;
 	
-	@Override
-	public String toString() {
-		return "Test1VO [name=" + name + ", age=" + age + ", gender=" + gender + ", job=" + job + ", address=" + address
-				+ "]";
-	}
 	public String getName() {
 		return name;
 	}
@@ -42,6 +37,9 @@ public class Test1VO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Test1VO [name=" + name + ", age=" + age + ", gender=" + gender + ", job=" + job + ", address=" + address
+				+ "]";
+	}
 }

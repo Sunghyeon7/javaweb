@@ -72,7 +72,7 @@ public class LoginController extends HttpServlet {
 		else if(com.equals("/UpdateOk")) {
 			command = new UpdateOkCommand();
 			command.execute(request, response);
-			viewPage += "/update.jsp";
+			viewPage = "/include/message.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

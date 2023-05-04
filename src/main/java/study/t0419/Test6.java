@@ -11,15 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/t6")
 public class Test6 extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		response.setContentType("text/html; charset=utf-8");
 		
 		PrintWriter out = response.getWriter();
 		
-		out.println("안녕!!! 나는 한글~~<br/>");
-		out.println("Good Afternoon~~<br/>");
+		out.println("안녕!!! 나는 한글~~~<br/>");
+		out.println("Good Afternoon~~~<br/>");
+		
 	}
-
 }

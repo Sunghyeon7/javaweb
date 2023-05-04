@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@SuppressWarnings("serial")
 @WebServlet("/t8Get")
-public class Test8 extends HttpServlet{
+public class Test8 extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
@@ -26,7 +25,5 @@ public class Test8 extends HttpServlet{
 		
 		out.print("성명 : " + name + "<br/>");
 		out.print("나이 : " + age + "<br/>");
-		
 	}
-
 }

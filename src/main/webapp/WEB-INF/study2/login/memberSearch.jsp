@@ -6,6 +6,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>memberSearch.jsp</title>
   <jsp:include page="/include/bs4.jsp" />
   <style>
@@ -19,7 +20,7 @@
     
     function deleteCheck() {
     	let ans = confirm("정말 탈퇴하시겠습니까?");
-    	if(ans) location.href = "${ctp}/database/DeleteOk"; 
+    	if(ans) location.href = "${ctp}/DeleteOk.re"; 
     }
   </script>
 </head>

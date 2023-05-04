@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import conn.PasswordSecurity;
 import study.database.LoginDAO;
 import study.database.LoginVO;
 
@@ -14,8 +15,12 @@ public class LoginJoinOkCommand implements LoginInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
-		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
+		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd").toUpperCase();
 		String name = request.getParameter("name")==null ? "" : request.getParameter("name");
+		
+		// 비밀번호 암호화해서 돌려받기
+		PasswordSecurity passwordSecurity = new PasswordSecurity();
+		pwd = passwordSecurity.passwordEncryption(pwd);
 		
 		LoginVO vo = new LoginVO();
 		

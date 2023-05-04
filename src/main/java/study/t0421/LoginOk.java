@@ -17,16 +17,15 @@ public class LoginOk extends HttpServlet {
 		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
 		String member;
 		
-		// 회원 인증 ? admin, hkd1234 		: 비밀번호 1234
+		// 회원인증? admin, hkd1234    :  비번 1234
 		if((mid.equals("admin") && pwd.equals("1234")) || (mid.equals("hkd1234")) && pwd.equals("1234")) {
-			System.out.println("정상 회원 입니다.");
+			System.out.println("정회원 통과...");
 			member = "OK";
 		}
 		else {
-			System.out.println("비회원 입니다.");
+			System.out.println("비회원 통과...");
 			member = "NO";
 		}
 		response.sendRedirect(request.getContextPath()+"/study/0421_include/main.jsp?member="+member);
-		
 	}
 }

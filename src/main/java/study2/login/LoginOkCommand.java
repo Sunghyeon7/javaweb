@@ -1,6 +1,7 @@
 package study2.login;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,6 +10,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import conn.PasswordSecurity;
 
 public class LoginOkCommand implements LoginInterface {
 
@@ -19,9 +22,22 @@ public class LoginOkCommand implements LoginInterface {
 		
 		LoginDAO dao = new LoginDAO();
 		
-		LoginVO vo = dao.getLoginCheck(mid, pwd);
+		// LoginVO vo = dao.getLoginCheck(mid, pwd);
+		// 넘어온 mid로 해당되는 사람의 정보가 있으면 읽어와서 해시키로 해시키값을 가져와서 저장된 해시키값과 같은지를 비교해서 인증처리를 마치게 한다.
+		LoginVO vo = dao.getMidCheck(mid);
 		
 		if(vo.getName() != null) {
+			// 저장된 아이디와 일치하는회원이 있다면 비밀번호가 맞는지 처리한다.
+			String[] pwdTemp = vo.getPwd().split("_");
+			
+			// 작업 처리중입니다. 아직 미완성...
+			PasswordSecurity passwordSecurity = new PasswordSecurity();
+//			String imsiPwd = passwordSecurity.passwordEncryption(pwdTemp[]);
+			
+//			if()
+			
+			
+			
 			// 회원 인증 성공시 처리...
 			// 회원인증후 처리(1.자주사용하는자료를 세션에 저장(아이디,성명,닉네임),  2.쿠키에 아이디 저장또는 제거하기)
 			
@@ -80,7 +96,7 @@ public class LoginOkCommand implements LoginInterface {
 			response.addCookie(cookieMid);
 			
 			
-			// 정상 로그인Ok이후에 모든 처리가 끝나면 memberMain.re로 보내준다.
+			// 정상 로그인Ok이후에 모든 처리가 끝나면 memberMain.jsp로 보내준다.
 			request.setAttribute("msg", mid + "님 로그인 되었습니다.");
 			request.setAttribute("url", request.getContextPath()+"/MemberMain.re");
 		}
