@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import conn.PasswordSecurity;
-import study.database.LoginDAO;
-import study.database.LoginVO;
 
 public class LoginJoinOkCommand implements LoginInterface {
 
@@ -19,16 +17,21 @@ public class LoginJoinOkCommand implements LoginInterface {
 		String name = request.getParameter("name")==null ? "" : request.getParameter("name");
 		
 		// 비밀번호 암호화해서 돌려받기
+		LoginDAO dao = new LoginDAO();
+		int hashKeyCount = dao.getHashKeyCount();
+		
+		int randomKey = (int)(Math.random()*hashKeyCount)+1;
+		
 		PasswordSecurity passwordSecurity = new PasswordSecurity();
-		pwd = passwordSecurity.passwordEncryption(pwd);
+		pwd = passwordSecurity.passwordEncryption(pwd, randomKey);
+		// 키와 키값을 조합해서 pwd를 다시 만들었다.
+		pwd = randomKey + "_" + pwd;
 		
 		LoginVO vo = new LoginVO();
 		
 		vo.setMid(mid);
 		vo.setPwd(pwd);
 		vo.setName(name);
-		
-		LoginDAO dao = new LoginDAO();
 		
 		LoginVO vo2 = dao.getMidCheck(mid);
 		

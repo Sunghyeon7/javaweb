@@ -4,7 +4,7 @@ import study2.login.LoginDAO;
 
 public class PasswordSecurity {
 	
-	public String passwordEncryption(String pwd) {
+	public String passwordEncryption(String pwd, int randomKey) {
 		// EOR을 이용한 비밀번호 암호화처리.
 		// 숫자/문자(혼합) 암호화 하는 경우...(영문 소문자 입력시는 대문자로 변경해서 처리)
 		System.out.println("1.원본 비밀번호 : " + pwd);
@@ -21,12 +21,12 @@ public class PasswordSecurity {
 		long encPwd;
 		long key;
 		
-		int randomkey = (int)(Math.random()*50)+1;
-		System.out.println("선별된 randomkey는 : " + randomkey);
+		//int randomKey = (int)(Math.random()*50)+1;
+		System.out.println("선별된 randomkey는 : " + randomKey);
 		
 		// DB에 저장시켜놓은 hashTable에서 보내준 키에 따른 키값을 가져오고 있다.
 		LoginDAO dao = new LoginDAO();
-		key = dao.getHashTableSearch(randomkey);
+		key = dao.getHashTableSearch(randomKey);
 		
 		encPwd = intPwd ^ key;
 		strPwd = String.valueOf(encPwd);
@@ -52,8 +52,6 @@ public class PasswordSecurity {
 		}
 		System.out.println("5.최종적으로 복호화된 비밀번호 : " + result);
 		
-		// 키와 키값을 조합해서 다시 돌려준다.
-		strPwd = randomkey + "_" + strPwd;
 		return strPwd;
 	}
 	

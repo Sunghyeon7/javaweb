@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class test4Controller extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/* System.out.println("이곳은 /mapping/Test4 입니다."); */
+		System.out.println("이곳은 /mapping/Test4 입니다.");
 		
 		int su1 = request.getParameter("su1")==null ? 0 : Integer.parseInt(request.getParameter("su1"));
 		int su2 = request.getParameter("su2")==null ? 0 : Integer.parseInt(request.getParameter("su2"));

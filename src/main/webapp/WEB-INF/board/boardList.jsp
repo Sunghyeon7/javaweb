@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -49,9 +50,18 @@
     <c:forEach var="vo" items="${vos}" varStatus="st">
       <tr>
         <td>${vo.idx}</td>
-        <td>${vo.title}</td>
+        <td>
+        	${vo.title}
+        	<c:if test = "${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+        </td>
         <td>${vo.nickName}</td>
-        <td>${vo.wDate}</td>
+        <td>
+          <!-- 1일(24시간) 이내는 시간만 표시, 이후는 날짜와 시간을 표시 : 2023-05-04 10:35:25 -->
+          <!-- 단(24시간안에 만족하는 자료), 날짜가 오늘날짜만 시간으로표시하고, 어제날짜는 날짜로 표시하시오. -->
+          <c:if test="${vo.hour_diff > 24}">${fn:substring(vo.wDate,0,19)}</c:if>
+          <c:if test="${vo.day_diff eq 0}">${fn:substring(vo.wDate,11,16)}</c:if>
+          <c:if test="${vo.day_diff le 0}">${fn:substring(vo.wDate,0,10)}</c:if>
+        </td>
         <td>${vo.readNum}</td>
         <td>${vo.good}</td>
       </tr>
