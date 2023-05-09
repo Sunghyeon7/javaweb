@@ -5,16 +5,17 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>message.jsp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>title</title>
   <jsp:include page="/include/bs4.jsp" />
-  <script>
-    'use strict';
-    
-    if("${msg}"!="NO") alert("${msg}");
-    location.href = '${url}';
-  </script>
 </head>
 <body>
-
+<jsp:include page="/include/header.jsp" />
+<p><br/></p>
+<div class="container">
+  
+</div>
+<p><br/></p>
+<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
