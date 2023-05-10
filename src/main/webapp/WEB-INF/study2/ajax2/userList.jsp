@@ -17,6 +17,7 @@
   <script>
     'use strict';
     
+    // user 등록하기
     function userInput() {
     	let mid = $("#mid").val().trim();
     	let name = $("#name").val().trim();
@@ -66,7 +67,7 @@
     			}
     		},
     		error : function() {
-    			alert("전송 오류");
+    			alert("전송오류");
     		}
     	});
     }
@@ -82,11 +83,11 @@
     		data : {idx : idx},
     		success:function(res) {
     			if(res == "1") {
-    				alert("삭제 완료");
+    				alert("삭제완료");
     				location.reload();
     			}
     			else {
-    				alert("삭제 실패");
+    				alert("삭제실패");
     			}
     		},
     		error : function() {
@@ -95,7 +96,7 @@
     	});
     }
     
-    // 개별 조회
+    // 개별조회
     function userSearch(idx) {
     	$.ajax({
     		type : "post",
@@ -103,6 +104,7 @@
     		data : {idx : idx},
     		success:function(res) {
     			let str = res.split("/");
+    			$("#idx").val(str[0]);
     			$("#mid").val(str[1]);
     			$("#name").val(str[2]);
     			$("#age").val(str[3]);
@@ -114,12 +116,61 @@
     	});
     }
     
-    // 수정 하기
-    function userUpdate(){
-    	$.ajax({
-    		
-    	})
+    // 자료 수정하기
+    function userUpdate() {
+    	let idx = $("#idx").val();
+    	let mid = $("#mid").val().trim();
+    	let name = $("#name").val().trim();
+    	let age = $("#age").val();
+    	let address = $("#address").val().trim();
     	
+    	if(mid == "") {
+    		alert("아이디를 입력하세요");
+    		$("#mid").focus();
+    		return false;
+    	}
+    	else if(name == "") {
+    		alert("성명을 입력하세요");
+    		$("#name").focus();
+    		return false;
+    	}
+    	else if(age == "") {
+    		alert("나이를 입력하세요");
+    		$("#age").focus();
+    		return false;
+    	}
+    	else if(address == "") {
+    		alert("주소를 입력하세요");
+    		$("#address").focus();
+    		return false;
+    	}
+    	
+    	let query = {
+    			idx     : idx,
+    			mid     : mid,
+    			name    : name,
+    			age     : age,
+    			address : address
+    	}
+    	
+    	$.ajax({
+    		type  : "post",
+    		url   : "${ctp}/UserUpdate.st",
+    		data  : query,
+    		success:function(res) {
+    			if(res == "1") {
+    				alert("수정처리 되었습니다.");
+    				location.reload();
+    			}
+    			else {
+    				alert(res);
+    				$("#mid").focus();
+    			}
+    		},
+    		error : function() {
+    			alert("전송오류");
+    		}
+    	});
     }
   </script>
 </head>
@@ -148,13 +199,14 @@
       </tr>
       <tr>
         <td colspan="2" class="text-center">
-          <input type="button" value="등록하기" onclick="userInput()" class="btn btn-success"/>&nbsp;
+          <input type="button" value="등록" onclick="userInput()" class="btn btn-success"/>&nbsp;
           <input type="reset" value="다시입력" class="btn btn-warning"/>&nbsp;
-          <input type="button" value="수정하기" onclick="userUpdate()" class="btn btn-info"/>&nbsp;
+          <input type="button" value="수정" onclick="userUpdate()" class="btn btn-info"/>&nbsp;
           <input type="button" value="전체보기" onclick="location.href='${ctp}/UserList.st';" class="btn btn-primary"/>
         </td>
       </tr>
     </table>
+    <input type="hidden" name="idx" id="idx" />
   </form>
   <hr/>
   <h2>User 전체 리스트</h2>

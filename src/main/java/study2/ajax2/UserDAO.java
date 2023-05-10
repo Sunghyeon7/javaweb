@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import conn.GetConn;
-import study2.login.LoginVO;
 
 public class UserDAO {
 	GetConn getConn = GetConn.getInstance();
@@ -123,24 +122,25 @@ public class UserDAO {
 		return vo;
 	}
 
-	public String getMidUpdate(UserVO vo) {
-			String res = "";
-			try {
-				sql = "update User set pwd=?, name=?, mid=? where idx=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, vo.getMid());
-				pstmt.setString(2, vo.getName());
-				pstmt.setInt(3, vo.getAge());
-				pstmt.setString(4, vo.getAddress());
-				pstmt.executeUpdate();
-				res = "1";
-			} catch (SQLException e) {
-				System.out.println("SQL 오류 : " + e.getMessage());
-			} finally {
-				getConn.pstmtClose();
-			}
-			return res;
+	// user 수정하기
+	public String setUserUpdate(UserVO vo) {
+		String res = "0";
+		try {
+			sql = "update user set mid=?,name=?,age=?,address=? where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getName());
+			pstmt.setInt(3, vo.getAge());
+			pstmt.setString(4, vo.getAddress());
+			pstmt.setInt(5, vo.getIdx());
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("sql오류 : " + e.getMessage());
+		}	finally {
+			getConn.pstmtClose();
 		}
+		return res;
 	}
 	
-
+}
