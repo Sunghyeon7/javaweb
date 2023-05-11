@@ -80,9 +80,8 @@
     
     function boardDelete() {
     	let ans = confirm("현 게시글을 삭제하시겠습니까?");
-    	if(ans) location.href="${ctp}/BoarDelete.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&nickName=${vo.nickName}";
+    	if(ans) location.href="${ctp}/BoardDelete.bo?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&nickName=${vo.nickName}";
     }
-    
     
     // 댓글달기(aJax처리)
     function replyCheck() {
@@ -110,13 +109,37 @@
     				location.reload();
     			}
     			else {
-    				alert("댓글이 입력 실패");
+    				alert("댓글이 입력 실패~~");
     			}
     		},
     		error : function() {
     			alert("전송 오류!!!");
     		}
     	});
+    }
+    
+    // 댓글삭제
+    function replyDelete(idx) {
+    	let ans = confirm("선택한 댓글을 삭제하시겠습니까?");
+      if(!ans) return false;
+      
+      $.ajax({
+        type : 'post',
+        url : '${ctp}/BoardReplyDelete.bo',
+        data : {replyIdx : idx},
+        success : function(res) {
+          if(res == '1') {
+           alert('댓글이 삭제되었습니다.');
+           location.reload();
+          }
+          else {
+           alert('댓글이 삭제되지 않았습니다.');
+          }
+        },
+        error : function() {
+          alert('전송실패~~');
+        }
+      });
     }
   </script>
 </head>
@@ -152,16 +175,14 @@
       <th>홈페이지</th>
       <td>${vo.homePage}</td>
       <th>좋아요</th>
-      
-       <!-- 좋아요 뷰 꾸미기 -->
       <td>
-        ${vo.good} 
+        ${vo.good} /
         <a href="javascript:goodCheck()">
           <c:if test="${sSw == '1'}"><font color="#f00" size="5">♥</font></c:if>
           <c:if test="${sSw != '1'}"><font color="#000" size="5">♥</font></c:if>
-        </a> 
-<!--         <a href="javascript:goodCheckPlus()">♥</a>
-        <a href="javascript:goodCheckMinus()">♡</a> / -->
+        </a> /
+        <a href="javascript:goodCheckPlus()">👍</a>
+        <a href="javascript:goodCheckMinus()">👎</a> /
         <%-- 
         <c:if test="${sGoodSwitch == 1}"><a href="javascript:goodSwitchCheck(1)">👍</a></c:if>
         <c:if test="${sGoodSwitch == -1}"><a href="javascript:goodSwitchCheck(-1)">👎</a></c:if>
@@ -215,33 +236,33 @@
       </tr>
       <c:forEach var="replyVo" items="${replyVos}" varStatus="st">
         <tr>
-	          <td class="text-center">${replyVo.nickName}
-	            <c:if test="${sMid == replyVo.mid || sLevel == 0}">
-	              (<a href="javascript:replyDelete(${replyVo.idx})" title="댓글삭제"><b>x</b></a>)
-	            </c:if>
-	          </td>
-	          <td>${fn:replace(replyVo.content, newLine, "<br/>")}</td>
-	          <td class="text-center">${fn:substring(replyVo.wDate,0,10)}</td>
-	          <td class="text-center">${replyVo.hostIp}</td>
+          <td class="text-center">${replyVo.nickName}
+            <c:if test="${sMid == replyVo.mid || sLevel == 0}">
+              (<a href="javascript:replyDelete(${replyVo.idx})" title="댓글삭제"><b>x</b></a>)
+            </c:if>
+          </td>
+          <td>${fn:replace(replyVo.content, newLine, "<br/>")}</td>
+          <td class="text-center">${fn:substring(replyVo.wDate,0,10)}</td>
+          <td class="text-center">${replyVo.hostIp}</td>
         </tr>
       </c:forEach>
     </table>
   </div>
   
-  <!-- 댓글 입력 창  -->
+  <!-- 댓글 입력창 -->
   <form name="replyForm">
-  	<table class="table table-center">
-  		<tr>
-  			<td style="width:85%" class="text-left">
-  				글내용 :
-  				<textarea rows="4" name="content" id="content" class="form-control"> </textarea>
-  			</td>
-  			<td style="width:15%">
-  				<br/>
-  				<p> 작성자 : ${sNickName} </p>
-  				<p> <input type="button" value="등록" onclick="replyCheck()" class="btn btn-info btn-sm" /> </p>
-  			</td>
-  		</tr>
+  	<table class="table tbale-center">
+  	  <tr>
+  	    <td style="width:85%" class="text-left">
+  	      글내용 :
+  	      <textarea rows="4" name="content" id="content" class="form-control"></textarea>
+  	    </td>
+  	    <td style="width:15%">
+  	    	<br/>
+  	      <p>작성자 : ${sNickName}</p>
+  	      <p><input type="button" value="댓글달기" onclick="replyCheck()" class="btn btn-info btn-sm"/></p>
+  	    </td>
+  	  </tr>
   	</table>
   </form>
 </div>
