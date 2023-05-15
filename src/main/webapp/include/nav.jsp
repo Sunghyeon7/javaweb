@@ -43,7 +43,10 @@
 				  <div class="dropdown">
 				    <button type="button" class="btn text-light dropdown-toggle" data-toggle="dropdown">Study2</button>
 				    <div class="dropdown-menu">
-				      <a class="dropdown-item" href="#">URL매핑(디렉토리패턴)</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad1.st">싱글 파일 업로드 연습1</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad2.st">멀티 파일 업로드 연습2</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad3.st">멀티 파일 업로드 연습3</a>
+				      <a class="dropdown-item" href="${ctp}/FileUpLoad4.st">멀티 파일 업로드 연습4</a>
 				      <a class="dropdown-item" href="#">로그인연습3</a>
 				      <a class="dropdown-item" href="#">Link 3</a>
 				    </div>
@@ -54,10 +57,10 @@
 				    <button type="button" class="btn text-light dropdown-toggle" data-toggle="dropdown">MyPage</button>
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="${ctp}/MemberMain.mem">회원메인방</a>
-				      <a class="dropdown-item" href="#">회원정보수정</a>
-				      <a class="dropdown-item" href="${ctp}/MemberList.mem">회원리스트</a>
-				      <a class="dropdown-item" href="#">회원탈퇴</a>
-				      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="#">관리자 메뉴</a> </c:if>
+				      <a class="dropdown-item" href="${ctp}/MemberPwdCheckForm.mem">회원정보수정</a>
+				      <c:if test="${sLevel != 1}"><a class="dropdown-item" href="${ctp}/MemberList.mem">회원리스트</a></c:if>
+				      <a class="dropdown-item" href="javascript:deleteAsk()">회원탈퇴</a>
+				      <c:if test="${sLevel == 0}"><a class="dropdown-item" href="${ctp}/AdminMain.ad">관리자메뉴</a></c:if>
 				    </div>
 				  </div>  
 	      </li>
