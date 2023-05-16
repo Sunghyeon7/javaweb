@@ -24,7 +24,7 @@ public class FileDeleteCommond implements StudyInterface {
 			file.delete();
 			res = "1";
 		}
-			
+		
 		response.getWriter().write(res);
 	}
 

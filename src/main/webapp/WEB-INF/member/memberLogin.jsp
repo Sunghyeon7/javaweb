@@ -21,13 +21,13 @@
 		    <div class="form-group">
 		      <label for="mid">회원 아이디</label>
 		      <input type="text" class="form-control" name="mid" id="mid" value="${mid}" placeholder="아이디를 입력하세요." required autofocus />
-		      <div class="valid-feedback">Ok!!!</div>
+		      <div class="valid-feedback">올바른 형식 입니다.</div>
 		      <div class="invalid-feedback">아이디를 입력해 주세요.</div>
 		    </div>
 		    <div class="form-group">
 		      <label for="pwd">비밀번호</label>
-		      <input type="password" class="form-control" name="pwd" id="pwd" value="1234" placeholder="Enter email" required />
-		      <div class="valid-feedback">Ok!!!</div>
+		      <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" required />
+		      <div class="valid-feedback">올바른 형식 입니다.</div>
 		      <div class="invalid-feedback">비밀번호를 입력해 주세요.</div>
 		    </div>
 		    <div class="form-group text-center">
