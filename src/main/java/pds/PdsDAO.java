@@ -19,17 +19,28 @@ public class PdsDAO {
 	
 	PdsVO vo = null;
 
-	public ArrayList<PdsVO> getPdsList(String part) {
+	// 파트별 전체 자료 가져오기
+	public ArrayList<PdsVO> getPdsList(int startIndexNo, int pageSize, String part) {
 		ArrayList<PdsVO> vos = new ArrayList<>();
 		try {
 			if(part.equals("전체")) {
-				sql = "select * from pds order by idx desc";
+				sql = "SELECT 	*,datediff(now(), fDate) as day_diff, "
+						+ "timestampdiff(hour, fDate, now()) as hour_diff "
+						+ "FROM pds order by idx desc "
+						+ "limit ?,?";
 				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, startIndexNo);
+				pstmt.setInt(2, pageSize);
 			}
 			else {
-				sql = " select * from pds where part = ? order by idx desc";
+				sql = "SELECT 	*,datediff(now(), fDate) as day_diff, "
+						+ "timestampdiff(hour, fDate, now()) as hour_diff "
+						+ "FROM pds where part=? order by idx desc "
+						+ "limit ?,?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, part);
+				pstmt.setInt(2, startIndexNo);
+				pstmt.setInt(3, pageSize);
 			}
 			rs = pstmt.executeQuery();
 			
@@ -45,28 +56,29 @@ public class PdsDAO {
 				vo.setPart(rs.getString("part"));
 				vo.setPwd(rs.getString("pwd"));
 				vo.setfDate(rs.getString("fDate"));
-				vo.setDownNum(rs.getShort("downNum"));
+				vo.setDownNum(rs.getInt("downNum"));
 				vo.setOpenSw(rs.getString("openSw"));
 				vo.setContent(rs.getString("content"));
 				vo.setHostIp(rs.getString("hostIp"));
 				
+				vo.setDay_diff(rs.getInt("day_diff"));
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				
 				vos.add(vo);
-						
 			}
 		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
+			System.out.println("SQL 에러 : " + e.getMessage());
 		} finally {
 			getConn.rsClose();
 		}
-				
 		return vos;
 	}
 
-		// 자료실에 DB 저장 처리
+	// 자료실 DB저장처리
 	public int setPdsInputOk(PdsVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into pds values (default, ?, ?, ?, ?, ?, ?, ?, ?, default, default, ?, ?, ?)";
+			sql = "insert into pds values (default,?,?,?,?,?,?,?,?,default,default,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getNickName());
@@ -79,7 +91,6 @@ public class PdsDAO {
 			pstmt.setString(9, vo.getOpenSw());
 			pstmt.setString(10, vo.getContent());
 			pstmt.setString(11, vo.getHostIp());
-			
 			pstmt.executeUpdate();
 			res = 1;
 		} catch (SQLException e) {
@@ -90,6 +101,7 @@ public class PdsDAO {
 		return res;
 	}
 
+	// 다운로드횟수 증가...
 	public void setPdsDownNumCheck(int idx) {
 		try {
 			sql = "update pds set downNum = downNum + 1 where idx = ?";
@@ -101,10 +113,9 @@ public class PdsDAO {
 		} finally {
 			getConn.pstmtClose();
 		}
-		
 	}
 
-	// idx로 개별자료 검색 
+	// idx로 개별자료 검색처리
 	public PdsVO getIdxSearch(int idx) {
 		vo = new PdsVO();
 		try {
@@ -114,7 +125,7 @@ public class PdsDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				vo.setIdx(rs.getInt("idx"));
+				vo.setIdx(idx);
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
 				vo.setfName(rs.getString("fName"));
@@ -124,14 +135,11 @@ public class PdsDAO {
 				vo.setPart(rs.getString("part"));
 				vo.setPwd(rs.getString("pwd"));
 				vo.setfDate(rs.getString("fDate"));
-				vo.setDownNum(rs.getShort("downNum"));
+				vo.setDownNum(rs.getInt("downNum"));
 				vo.setOpenSw(rs.getString("openSw"));
 				vo.setContent(rs.getString("content"));
 				vo.setHostIp(rs.getString("hostIp"));
-				
-				
 			}
-			
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
@@ -140,11 +148,10 @@ public class PdsDAO {
 		return vo;
 	}
 
-	// 자료실에서 파일 삭제후 DB에서도 자료실의 정보를 삭제한다.
+	// 자료실 파일을 삭제처리후 DB에서 자료실에서도 삭제처리
 	public String setPdsDelete(int idx) {
-		String res ="0";
+		String res = "0";
 		try {
-			
 			sql = "delete from pds where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
@@ -158,20 +165,29 @@ public class PdsDAO {
 		return res;
 	}
 
-	public int getTotRecCnt() {
+	// part별 총계 구하기
+	public int totRecCnt(String part) {
 		int totRecCnt = 0;
 		try {
-			sql = "select count(idx) as cnt from pds";
-			pstmt = conn.prepareStatement(sql);
+			if(part.equals("전체")) {
+				sql = "select count(*) as cnt from pds";
+				pstmt = conn.prepareStatement(sql);
+			}
+			else {
+				sql = "select count(*) as cnt from pds where part = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, part);
+			}
 			rs = pstmt.executeQuery();
+			
 			rs.next();
 			totRecCnt = rs.getInt("cnt");
 		} catch (SQLException e) {
-			System.out.println("SQL 오류 : " + e.getMessage());
+			System.out.println("SQL 에러 : " + e.getMessage());
 		} finally {
 			getConn.rsClose();
 		}
 		return totRecCnt;
 	}
-	
+
 }

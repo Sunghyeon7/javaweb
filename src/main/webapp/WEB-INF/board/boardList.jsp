@@ -120,6 +120,7 @@
       <input type="hidden" name="pageSize" value="${pageSize}"/>
     </form>
   </div>
+  
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />

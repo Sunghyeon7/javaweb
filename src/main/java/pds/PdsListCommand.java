@@ -15,25 +15,22 @@ public class PdsListCommand implements PdsInterface {
 		
 		PdsDAO dao = new PdsDAO();
 		
-		// 페이징 처리
+		// 페이징처리 준비 시작
 		int pag = request.getParameter("pag")==null ? 1 : Integer.parseInt(request.getParameter("pag"));
 		int pageSize = request.getParameter("pageSize")==null ? 5 : Integer.parseInt(request.getParameter("pageSize"));
-		int totRecCnt = dao.getTotRecCnt();
-		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) + 1 ;
+		int totRecCnt = dao.totRecCnt(part);
+		int totPage = (totRecCnt % pageSize)==0 ? totRecCnt / pageSize : (totRecCnt / pageSize) + 1;
 		int startIndexNo = (pag - 1) * pageSize;
 		int curScrStartNo = totRecCnt - startIndexNo;
 		
-		// 블록페이징처리....
+		// 블록페이징처리.....(3단계) -> 블록의 시작번호를 0번부터 처리했다.
 		int blockSize = 3;
 		int curBlock = (pag - 1) / blockSize;
 		int lastBlock = (totPage - 1) / blockSize;
 		
-		
-		ArrayList<PdsVO> vos = dao.getPdsList(part);
+		ArrayList<PdsVO> vos = dao.getPdsList(startIndexNo, pageSize, part);
 		
 		request.setAttribute("vos", vos);
-		request.setAttribute("part", part);
-		
 		request.setAttribute("pag", pag);
 		request.setAttribute("totPage", totPage);
 		request.setAttribute("curScrStartNo", curScrStartNo);
@@ -41,7 +38,8 @@ public class PdsListCommand implements PdsInterface {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
-
+		
+		request.setAttribute("part", part);
 	}
 
 }
