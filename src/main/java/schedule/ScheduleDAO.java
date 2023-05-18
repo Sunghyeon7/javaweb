@@ -73,4 +73,22 @@ public class ScheduleDAO {
 		return res;
 	}
 
+	// 스케줄 삭제처리
+	public String setScheduleDeleteOk(int idx) {
+		String res = "0";
+		try {
+			sql = "delete from schedule where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			res = "1";
+		} catch (SQLException e) {
+			System.out.println("SQL 에러 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		return res;
+	}
+
 }
+

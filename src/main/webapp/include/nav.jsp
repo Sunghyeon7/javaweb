@@ -51,6 +51,7 @@
 				      <a class="dropdown-item" href="${ctp}/ModalTest2.st">Modal 연습2</a>
 				      <a class="dropdown-item" href="${ctp}/Calendar.st">달력 연습</a>
 				      <a class="dropdown-item" href="${ctp}/Calendar2.st">달력 연습2</a>
+				      <a class="dropdown-item" href="${ctp}/ApiTest.st">API 연습</a>
 				      
 				    </div>
 				  </div>  

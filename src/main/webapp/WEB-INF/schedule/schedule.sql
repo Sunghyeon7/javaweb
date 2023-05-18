@@ -48,12 +48,3 @@ select * from schedule where mid = 'hkd1234' and date_format(sDate, '%Y-%m')='20
 
 
 
-
-
-
-
-
-
-
-
-
